@@ -1,0 +1,38 @@
+@import "../../components";
+.check-btn {
+  width: 18px !important;
+  height: 18px !important;
+  border-radius: 4px !important;
+  position: relative;
+  margin-left: 6px;
+  transition: 0.2s ease-in-out;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -o-appearance: none;
+  background-color: #ffffff;
+  filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
+  overflow: hidden;
+  cursor: pointer;
+  &:checked {
+    background-color: $color-answer-text;
+    &::after {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+  &:focus {
+    border: none;
+    outline: none;
+  }
+}
+.check-btn::after {
+  content: url(./check-icon.svg);
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  visibility: hidden;
+  top: 0;
+  left: 0;
+  transform: translate(25%, -40%);
+  opacity: 0;
+}

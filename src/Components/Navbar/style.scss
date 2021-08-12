@@ -1,0 +1,70 @@
+@import "../../components";
+
+.navbar {
+  padding: 20px 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .logo {
+    margin-right: 10px;
+    img {
+      width: 100%;
+      -webkit-user-drag: none;
+    }
+    .base-logo {
+      display: none;
+    }
+  }
+  .nav {
+    .nav-item {
+      font-family: "Roboto", sans-serif;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 14px;
+      line-height: 16px;
+      color: $color-answer-text;
+      margin-right: 10px;
+      &:last-child {
+        margin-right: 0;
+      }
+      .nav-link {
+        padding: 0;
+        color: $color-yellow;
+        transition: 0.3s ease;
+        &:hover {
+          color: $color-blue;
+        }
+      }
+      .line {
+        width: 1px;
+        height: 100%;
+        background-color: $color-answer-text;
+      }
+    }
+  }
+}
+.database-navbar {
+  background-color: $color-blue;
+  .logo {
+    .nav-logo {
+      display: none;
+    }
+    .base-logo {
+      display: block;
+    }
+  }
+  .nav {
+    .nav-item {
+      color: #ffffff;
+      .nav-link {
+        color: #ffffff;
+        &:hover {
+          color: $color-yellow;
+        }
+      }
+      .line {
+        background-color: #ffffff;
+      }
+    }
+  }
+}

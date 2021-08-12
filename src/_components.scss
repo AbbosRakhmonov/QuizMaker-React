@@ -1,0 +1,23 @@
+//* Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap");
+
+//* Colors */
+$color-right-side: #6948a4;
+$color-bg: #f5f5f5;
+$color-yellow: #fdba4d;
+$color-blue: #5d80cb;
+$color-active: #a9bbe0;
+$color-input-placeholder: #bfbfbf;
+$color-label: #737373;
+$color-question-title: #565656;
+$color-answer-text: #757575;
+$color-answer-bg: #c9c9c9;
+$color-search-bar: #bababa;
+$color-textarea-bg: #ececec;
+
+body {
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
+}

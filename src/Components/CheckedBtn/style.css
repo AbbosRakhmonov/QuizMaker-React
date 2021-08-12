@@ -1,0 +1,53 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap");
+body {
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+.check-btn {
+  width: 18px !important;
+  height: 18px !important;
+  border-radius: 4px !important;
+  position: relative;
+  margin-left: 6px;
+  -webkit-transition: 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -o-appearance: none;
+  background-color: #ffffff;
+  -webkit-filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
+          filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.check-btn:checked {
+  background-color: #757575;
+}
+
+.check-btn:checked::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+.check-btn:focus {
+  border: none;
+  outline: none;
+}
+
+.check-btn::after {
+  content: url(./check-icon.svg);
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  visibility: hidden;
+  top: 0;
+  left: 0;
+  -webkit-transform: translate(25%, -40%);
+          transform: translate(25%, -40%);
+  opacity: 0;
+}
+/*# sourceMappingURL=style.css.map */

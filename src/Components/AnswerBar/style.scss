@@ -1,0 +1,29 @@
+@import "../../components";
+
+.answer-box {
+  max-width: 100%;
+  overflow: hidden !important;
+  resize: vertical;
+  padding: 10px 20px 10px 20px !important;
+  border-radius: 50px !important;
+  background-color: $color-answer-bg !important;
+  font-family: "Roboto", sans-serif !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-size: 16px !important;
+  transition: 0.3s ease-in-out !important;
+  white-space: normal;
+  border: 0 !important;
+  cursor: pointer;
+  line-height: normal !important;
+  ::placeholder {
+    color: $color-answer-text;
+  }
+  &:hover {
+    background-color: $color-active !important;
+    color: #ffffff !important;
+  }
+}
+.answer-label {
+  margin-left: 20px;
+}
