@@ -138,9 +138,14 @@ function Base() {
   };
 
   // Functions depend on Base Js
-  const clickEditBtn = (id) => {
-    const selectedQuestion = questions.find((item) => item.id === id);
-    setCurrentQuestion((prevState) => ({ ...selectedQuestion }));
+  const clickEditBtn = (item) => {
+    const answers = item.answers.map((item) => ({ ...item }));
+    setCurrentQuestion((prevState) => ({
+      id: item.id,
+      title: item.title,
+      answers: answers,
+      checked: item.checked,
+    }));
     setTypeModal("edit");
     toggleModal();
   };
@@ -158,9 +163,8 @@ function Base() {
     setTypeModal("add");
     toggleModal();
   };
-  const clickDeleteBtn = (id) => {
-    const selectedQuestion = questions.find((item) => item.id === id);
-    setCurrentQuestion({ ...selectedQuestion });
+  const clickDeleteBtn = (item) => {
+    setCurrentQuestion({ ...item });
     setTypeModal("delete");
     toggleModal();
   };
@@ -405,7 +409,7 @@ function Base() {
                           selectedMoreThanOne ? "disabled" : ""
                         }`}
                         disabled={selectedMoreThanOne ? true : false}
-                        onClick={() => clickEditBtn(item.id)}
+                        onClick={() => clickEditBtn(item)}
                       >
                         <img src={PencilIcon} alt="pencil" />
                       </button>
@@ -413,7 +417,7 @@ function Base() {
                         className={`btn delete-btn ${
                           selectedMoreThanOne ? "disabled" : ""
                         }`}
-                        onClick={() => clickDeleteBtn(item.id)}
+                        onClick={() => clickDeleteBtn(item)}
                         disabled={selectedMoreThanOne ? true : false}
                       >
                         <img src={TrashIcon} alt="trash" />
