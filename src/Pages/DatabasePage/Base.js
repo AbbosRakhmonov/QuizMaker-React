@@ -68,13 +68,14 @@ function Base() {
     });
   };
   const addNewQuestion = () => {
-    const answers = currentQuestion.answers;
+    const answers = currentQuestion.answers.map((item) => ({ ...item }));
     const title = currentQuestion.title;
     const checked = false;
     if (
       answers[answers.length - 1].title.replace(/\s+/g, " ").trim() !== "" &&
       answers.length >= 0 &&
-      title.replace(/\s+/g, " ").trim() !== ""
+      title.replace(/\s+/g, " ").trim() !== "" &&
+      answers.some((item) => item.checked)
     ) {
       const data = {
         title,
@@ -90,13 +91,14 @@ function Base() {
     toggleModal();
   };
   const saveEditedCurrentQuestion = () => {
-    const answers = currentQuestion.answers;
+    const answers = currentQuestion.answers.map((item) => ({ ...item }));
     const title = currentQuestion.title;
     const checked = false;
     if (
       answers[answers.length - 1].title.replace(/\s+/g, " ").trim() !== "" &&
-      answers.length >= 0 &&
-      title.replace(/\s+/g, " ").trim() !== ""
+      answers.length >= 1 &&
+      title.replace(/\s+/g, " ").trim() !== "" &&
+      answers.some((item) => item.checked)
     ) {
       const data = {
         title,
