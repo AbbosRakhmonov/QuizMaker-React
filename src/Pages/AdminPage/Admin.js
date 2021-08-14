@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { Link } from "react-router-dom";
 import Developer from "./developer.svg";
@@ -7,12 +7,6 @@ import Api from "../../Services/Api";
 import "./style.css";
 
 function Admin({ history }) {
-  async function getAdminPassword() {
-    const res = await Api("/admin", "get");
-    setAdminPassword(res.data[0].password);
-  }
-
-  const [adminPassword, setAdminPassword] = useState(null);
   const [isPasswordEmpty, setIsPasswordEmpty] = useState(false);
   const [isPasswordWrong, setIsPasswordWrong] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -21,19 +15,26 @@ function Admin({ history }) {
 
   const clickSignBtn = (e) => {
     e.preventDefault();
-    if (password.current.value === adminPassword) {
-      history.push("/database");
-      setIsPasswordEmpty((prev) => false);
-      setIsPasswordWrong((prev) => false);
+    if (
+      password.current.value !== "" &&
+      password.current.value.indexOf(" ") < 0
+    ) {
+      Api("/admin", "get").then((res) => {
+        if (password.current.value === res.data[0].password) {
+          history.push("/database");
+          setIsPasswordEmpty((prev) => false);
+          setIsPasswordWrong((prev) => false);
+        } else {
+          setIsPasswordEmpty((prev) => false);
+          setIsPasswordWrong((prev) => true);
+        }
+      });
     } else if (
       password.current.value === "" ||
       password.current.value.indexOf(" ") >= 0
     ) {
       setIsPasswordEmpty((prev) => true);
       setIsPasswordWrong((prev) => false);
-    } else {
-      setIsPasswordEmpty((prev) => false);
-      setIsPasswordWrong((prev) => true);
     }
   };
 
@@ -47,10 +48,6 @@ function Admin({ history }) {
       setModalVisible((prev) => !prev);
     }
   };
-
-  useEffect(() => {
-    getAdminPassword();
-  }, [adminPassword]);
 
   return (
     <section id="adminPage">
