@@ -8,6 +8,7 @@ import SearchIcon from "./search-icon.svg";
 import PencilIcon from "./edit-icon.svg";
 import TrashIcon from "./trash-icon.svg";
 import Api from "../../Services/Api";
+import Loader from "../../Components/Loader/Loader";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import "./style.css";
 
@@ -213,7 +214,9 @@ function Base() {
   };
 
   useEffect(() => {
-    getData();
+    setTimeout(() => {
+      getData();
+    }, 1000);
   }, []);
 
   useEffect(() => {
@@ -226,6 +229,7 @@ function Base() {
 
   return (
     <>
+      <Loader opacity={questions.length > 0 ? 0 : 1} />
       {modalVisible ? (
         <Modal isOpen={modalVisible} className={"pop-modal"}>
           <Button
