@@ -22,7 +22,8 @@ function Admin({ history }) {
       password.current.value.indexOf(" ") < 0
     ) {
       Api("/admin", "get").then((res) => {
-        if (password.current.value === res.data[0].password) {
+        const fetchedResult = res.data;
+        if (password.current.value === fetchedResult[0].password) {
           history.push("/database");
           setIsPasswordEmpty((prev) => false);
           setIsPasswordWrong((prev) => false);

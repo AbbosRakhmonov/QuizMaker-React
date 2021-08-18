@@ -3,7 +3,7 @@ import axios from "axios";
 function Api(url, method, data) {
   return axios({
     method: method,
-    url: `http://localhost:3001${url}`,
+    url: `https://quiz-maker-uz-default-rtdb.firebaseio.com${url}.json`,
     data: data,
   })
     .then((Response) => Response)

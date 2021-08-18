@@ -18,8 +18,13 @@ body {
           box-shadow: 0px 0px 60px rgba(0, 0, 0, 0.5) !important;
   border-radius: 50px !important;
   background-color: #ffffff;
-  max-width: 80% !important;
+  width: 1000px;
+  max-width: 90% !important;
+  min-height: auto;
   margin: 0 auto;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
 }
 
 .modal .pop-modal .modal-content {
@@ -30,8 +35,8 @@ body {
 .modal .pop-modal .modal-content .modal-close-btn {
   border-radius: 50%;
   position: absolute;
-  right: 32px;
-  top: 35px;
+  right: 20px;
+  top: 20px;
   background-color: transparent;
   padding: 0;
   -webkit-transition: 0.2s ease;
@@ -186,6 +191,10 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+}
+
+#dataBasePage .alert {
+  z-index: 10;
 }
 
 #dataBasePage .all-delete-btn {
@@ -383,11 +392,81 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-transition: 0.2s ease;
+  transition: 0.2s ease;
+}
+
+#dataBasePage .header .add-btn:hover {
+  background-color: #4665a7;
+}
+
+#dataBasePage .header .add-btn:active {
+  -webkit-transform: scale(0.9);
+          transform: scale(0.9);
 }
 
 #dataBasePage .header .add-btn .plus-icon {
   font-size: 14px;
   margin-left: 5px;
+}
+
+#dataBasePage .field-label {
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  color: #737373;
+  margin-bottom: 5px;
+}
+
+#dataBasePage .field-input {
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  color: #757575;
+}
+
+#dataBasePage .field-input::-webkit-input-placeholder {
+  color: #bfbfbf;
+  font-weight: normal;
+}
+
+#dataBasePage .field-input:-ms-input-placeholder {
+  color: #bfbfbf;
+  font-weight: normal;
+}
+
+#dataBasePage .field-input::-ms-input-placeholder {
+  color: #bfbfbf;
+  font-weight: normal;
+}
+
+#dataBasePage .field-input::placeholder {
+  color: #bfbfbf;
+  font-weight: normal;
+}
+
+#dataBasePage .btn-save-field {
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  border-radius: 50px;
+  color: #ffffff;
+  background-color: #5d80cb;
+  padding: 5px 30px;
+  -webkit-transition: 0.2s ease;
+  transition: 0.2s ease;
+}
+
+#dataBasePage .btn-save-field:hover {
+  background-color: #4665a7;
+}
+
+#dataBasePage .btn-save-field:active {
+  -webkit-transform: scale(0.9);
+          transform: scale(0.9);
 }
 
 #dataBasePage .columns {
@@ -481,10 +560,6 @@ body {
 #dataBasePage .question-container .questions-list .question .column-item .btn:active {
   -webkit-transform: scale(0.9);
           transform: scale(0.9);
-}
-
-#dataBasePage .question-container .questions-list .question .column-item .edit-btn {
-  margin-right: 15px;
 }
 
 @-webkit-keyframes deleteAllBtnVisible {

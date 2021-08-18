@@ -9,7 +9,16 @@ import PencilIcon from "./edit-icon.svg";
 import TrashIcon from "./trash-icon.svg";
 import Api from "../../Services/Api";
 import Loader from "../../Components/Loader/Loader";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  FormGroup,
+  Label,
+  Input,
+} from "reactstrap";
 import "./style.css";
 
 function Base() {
@@ -20,6 +29,10 @@ function Base() {
   const [selectedQuestions, setSelectedQuestions] = useState([]);
   const [selectedMoreThanOne, setSelectedMoreThanOne] = useState(false);
   const [searchedQuestion, setSearchQuestion] = useState("");
+  const [field, setField] = useState(null);
+  const [isFill, setIsFill] = useState(false);
+  const [isSavedField, setIsSavedField] = useState(false);
+  const [opacity, setOpacity] = useState(1);
 
   // Functions depend on Modal
   const toggleModal = () => {
@@ -74,7 +87,7 @@ function Base() {
     const checked = false;
     if (
       answers[answers.length - 1].title.replace(/\s+/g, " ").trim() !== "" &&
-      answers.length >= 0 &&
+      answers.length > 1 &&
       title.replace(/\s+/g, " ").trim() !== "" &&
       answers.some((item) => item.checked)
     ) {
@@ -84,9 +97,17 @@ function Base() {
         checked,
       };
       Api("/questions", "post", data)
-        .then(() => getData())
+        .then((res) => {
+          if (res.status === 200) {
+            setIsSavedField(true);
+          }
+          getData();
+        })
         .catch((error) => console.log(error));
     }
+    setTimeout(() => {
+      setIsSavedField(false);
+    }, 3000);
     setCurrentQuestion(null);
     setSearchQuestion("");
     toggleModal();
@@ -102,30 +123,41 @@ function Base() {
       answers.some((item) => item.checked)
     ) {
       const data = {
+        id: currentQuestion.id,
         title,
         answers,
         checked,
       };
       Api(`/questions/${currentQuestion.id}`, "put", data)
-        .then(() => getData())
+        .then((res) => {
+          if (res.status === 200) {
+            setIsSavedField(true);
+          }
+          getData();
+        })
         .catch((error) => console.log(error));
     }
+    setTimeout(() => {
+      setIsSavedField(false);
+    }, 3000);
     setCurrentQuestion(null);
     setSearchQuestion("");
     toggleModal();
   };
   const deleteAgreeBtn = () => {
-    if (selectedMoreThanOne) {
-      selectedQuestions.map((item) =>
-        Api(`/questions/${item}`, "delete")
-          .then(() => getData())
-          .catch((error) => console.log(error))
-      );
-    } else {
-      Api(`/questions/${currentQuestion.id}`, "delete")
-        .then(() => getData())
-        .catch((error) => console.log(error));
-    }
+    selectedQuestions.map((item) =>
+      Api(`/questions/${item}`, "delete")
+        .then((res) => {
+          if (res.status === 200) {
+            setIsSavedField(true);
+          }
+          getData();
+        })
+        .catch((error) => console.log(error))
+    );
+    setTimeout(() => {
+      setIsSavedField(false);
+    }, 3000);
     setCurrentQuestion(null);
     setSearchQuestion("");
     setSelectedQuestions([]);
@@ -166,11 +198,6 @@ function Base() {
     setTypeModal("add");
     toggleModal();
   };
-  const clickDeleteBtn = (item) => {
-    setCurrentQuestion({ ...item });
-    setTypeModal("delete");
-    toggleModal();
-  };
   const onChangeChecked = (id) => {
     const changedArray = questions.map((item, index) => {
       if (item.id === id) {
@@ -208,17 +235,60 @@ function Base() {
       );
     }
   };
-  const getData = async () => {
-    const res = await Api("/questions", "get");
-    setQuestions(res.data);
-  };
-
-  useEffect(() => {
+  const saveTimerAndAttemtps = () => {
+    const id = field.id;
+    const durations = field.durations;
+    const attempts = field.attempts;
+    const data = {
+      id,
+      durations,
+      attempts,
+    };
+    if (durations >= 5 && attempts >= 1) {
+      Api(`/time/${id}`, "put", data).then((res) => {
+        if (res.status === 200) {
+          setIsSavedField(true);
+        }
+        getData();
+      });
+    } else {
+      setIsFill((prev) => true);
+      setTimeout(() => {
+        setIsFill((prev) => false);
+      }, 6000);
+    }
     setTimeout(() => {
-      getData();
-    }, 1000);
+      setIsSavedField(false);
+    }, 3000);
+  };
+  const getData = async () => {
+    await Api("/questions", "get").then((res) => {
+      const fetchedResult = [];
+      for (let key in res.data) {
+        fetchedResult.push({
+          ...res.data[key],
+          id: key,
+        });
+      }
+      setQuestions(fetchedResult);
+      setTimeout(() => {
+        setOpacity(0);
+      }, 100);
+    });
+    await Api("/time", "get").then((res) => {
+      const fetchedResult = [];
+      for (let key in res.data) {
+        fetchedResult.push({
+          ...res.data[key],
+          id: key,
+        });
+      }
+      setField(fetchedResult[0]);
+    });
+  };
+  useEffect(() => {
+    getData();
   }, []);
-
   useEffect(() => {
     if (selectedQuestions.length >= 1) {
       setSelectedMoreThanOne((prev) => true);
@@ -226,12 +296,11 @@ function Base() {
       setSelectedMoreThanOne((prev) => false);
     }
   }, [selectedQuestions]);
-
   return (
     <>
-      <Loader opacity={questions.length > 0 ? 0 : 1} />
+      <Loader opacity={opacity} />
       {modalVisible ? (
-        <Modal isOpen={modalVisible} className={"pop-modal"}>
+        <Modal isOpen={modalVisible} className={"pop-modal"} centered={true}>
           <Button
             color={`btn modal-close-btn ${
               typeModal === "delete" ? "d-none" : ""
@@ -301,6 +370,26 @@ function Base() {
         ""
       )}
       <section id="dataBasePage">
+        <div
+          className={`alert alert-primary d-flex align-items-center ${
+            isFill ? "show-alert" : ""
+          }`}
+          role="alert"
+        >
+          <i className="alert-icon bi bi-info-circle-fill"></i>
+          <div>
+            Attempts must be greater than 1 , Time must be greater than 5{" "}
+          </div>
+        </div>
+        <div
+          className={`alert alert-success d-flex align-items-center ${
+            isSavedField ? "show-alert" : ""
+          }`}
+          role="alert"
+        >
+          <i className="alert-icon bi bi-check-circle-fill"></i>
+          <div>Congratulate Saved</div>
+        </div>
         <Navbar Page="database" />
         <div className="container">
           <div className="row p-0 m-0">
@@ -328,6 +417,58 @@ function Base() {
                 </button>
               </header>
             </div>
+            {field !== null ? (
+              <div className="col-12 p-0 mb-4">
+                <div className="row p-0 m-0">
+                  <div className="col-5 ps-0">
+                    <FormGroup>
+                      <Label className="field-label" for="attempts">
+                        Number Of Attempts
+                      </Label>
+                      <Input
+                        type="number"
+                        name="number"
+                        id="attempts"
+                        placeholder="number"
+                        className="field-input"
+                        value={field.attempts}
+                        onChange={(e) =>
+                          setField({ ...field, attempts: e.target.value })
+                        }
+                      />
+                    </FormGroup>
+                  </div>
+                  <div className="col-5">
+                    <FormGroup>
+                      <Label for="timer" className="field-label">
+                        Duration Of Test (minute)
+                      </Label>
+                      <Input
+                        type="number"
+                        name="number"
+                        id="timer"
+                        placeholder="minute"
+                        className="field-input"
+                        value={field.durations}
+                        onChange={(e) =>
+                          setField({ ...field, durations: e.target.value })
+                        }
+                      />
+                    </FormGroup>
+                  </div>
+                  <div className="col-2 pe-0 d-flex align-items-end justify-content-end">
+                    <button
+                      className="btn btn-save-field"
+                      onClick={saveTimerAndAttemtps}
+                    >
+                      Save
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         </div>
         <div className="col-md-12 columns m-0 p-0">
@@ -418,15 +559,6 @@ function Base() {
                         onClick={() => clickEditBtn(item)}
                       >
                         <img src={PencilIcon} alt="pencil" />
-                      </button>
-                      <button
-                        className={`btn delete-btn ${
-                          selectedMoreThanOne ? "disabled" : ""
-                        }`}
-                        onClick={() => clickDeleteBtn(item)}
-                        disabled={selectedMoreThanOne ? true : false}
-                      >
-                        <img src={TrashIcon} alt="trash" />
                       </button>
                     </div>
                   </div>

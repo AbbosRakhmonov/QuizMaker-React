@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./style.css";
 import Logo from "./logo.svg";
 import UserImage from "./user-image.svg";
@@ -7,10 +7,10 @@ import Play from "./play-button.svg";
 import Loader from "../../Components/Loader/Loader";
 
 function WelcomePage({ history }) {
+  const username = useRef();
+  const surname = useRef();
   const [opacityLoader, setOpacityLoader] = useState(1);
   const [isFill, setIsFill] = useState(false);
-  const username = useRef("");
-  const surname = useRef("");
   const clickPlayBtn = (e) => {
     e.preventDefault();
     if (
@@ -44,7 +44,7 @@ function WelcomePage({ history }) {
           role="alert"
         >
           <i className="alert-icon bi bi-info-circle-fill"></i>
-          <div>Please fill password</div>
+          <div>Please fill First Name and Surname</div>
         </div>
         <div className="container h-100">
           <div className="row m-0 p-0 h-100">

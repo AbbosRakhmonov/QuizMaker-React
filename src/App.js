@@ -3,7 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import WelcomePage from "./Pages/WelcomePage/WelcomePage";
 import AdminPage from "./Pages/AdminPage/Admin";
 import DatabasePage from "./Pages/DatabasePage/Base";
-import QuestionsPage from "./Pages/QuestionsPage/index";
+import QuestionsPage from "./Pages/QuestionsPage/QuestionPage";
 function App() {
   return (
     <>
