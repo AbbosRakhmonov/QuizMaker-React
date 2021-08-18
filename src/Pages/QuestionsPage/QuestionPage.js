@@ -23,6 +23,22 @@ function QuestionsPage({ history }) {
   function handleTimerFinish() {
     toggleModal();
   }
+  const shuffle = (array) => {
+    var currentIndex = array.length,
+      randomIndex;
+
+    while (currentIndex !== 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex],
+        array[currentIndex],
+      ];
+    }
+
+    return array;
+  };
   const toggleModal = () => {
     setModalVisible((prev) => !prev);
   };
@@ -89,11 +105,15 @@ function QuestionsPage({ history }) {
   };
   const getData = async () => {
     await Api("/questions", "get").then((res) => {
-      const fetchedResult = [];
+      let fetchedResult = [];
       for (let key in res.data) {
         fetchedResult.push({
           ...res.data[key],
         });
+      }
+      fetchedResult = shuffle(fetchedResult);
+      for (let item of fetchedResult) {
+        item.answers = shuffle(item.answers);
       }
       const data = fetchedResult.map((item) => ({
         title: item.title,
@@ -118,6 +138,7 @@ function QuestionsPage({ history }) {
   };
   useEffect(() => {
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     if (questions.length > 0) {
