@@ -138,7 +138,6 @@ function QuestionsPage({ history }) {
   };
   useEffect(() => {
     getData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     if (questions.length > 0) {
