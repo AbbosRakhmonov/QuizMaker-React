@@ -3,16 +3,15 @@
 body {
   padding: 0;
   margin: 0;
-  overflow-x: hidden;
+  overflow-x: hidden !important;
 }
 
 body {
   padding: 0;
   margin: 0;
-  overflow-x: hidden;
+  overflow: hidden !important;
   background-color: #f5f5f5 !important;
 }
-
 body .alert {
   display: none;
   position: absolute;
@@ -20,22 +19,18 @@ body .alert {
   width: 100%;
   font-family: "Open Sans", sans-serif;
   font-style: normal;
-  font-weight: regular;
+  font-weight: normal;
   font-size: 12px;
-  -webkit-transition: 0.2s ease-in-out;
   transition: 0.2s ease-in-out;
-  -webkit-transform: translateY(-100%);
-          transform: translateY(-100%);
+  transform: translateY(-100%);
   border: none;
   border-radius: 0;
 }
-
 body .alert .alert-icon {
   margin-right: 5px;
 }
-
 body .show-alert {
-  -webkit-transform: translateY(0) !important;
-          transform: translateY(0) !important;
+  transform: translateY(0) !important;
 }
+
 /*# sourceMappingURL=index.css.map */
