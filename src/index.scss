@@ -2,7 +2,7 @@
 body {
   padding: 0;
   margin: 0;
-  overflow-x: hidden;
+  overflow:hidden;
   background-color: $color-bg !important;
   
   .alert {
@@ -12,7 +12,7 @@ body {
     width: 100%;
     font-family: "Open Sans", sans-serif;
     font-style: normal;
-    font-weight: regular;
+    font-weight: normal;
     font-size: 12px;
     transition: 0.2s ease-in-out;
     transform: translateY(-100%);
