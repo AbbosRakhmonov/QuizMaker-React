@@ -134,8 +134,8 @@ body {
 #welcomePage .right-side .role-buttons .form-button {
   border-radius: 50%;
   border: 21px solid #ffffff;
-  -webkit-box-shadow: 0px 4px 25px #acacac;
-          box-shadow: 0px 4px 25px #acacac;
+  -webkit-box-shadow: 0 4px 25px #acacac;
+          box-shadow: 0 4px 25px #acacac;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -179,8 +179,8 @@ body {
 #welcomePage .right-side .role-buttons .form-button:active {
   -webkit-transform: scale(0.9);
           transform: scale(0.9);
-  -webkit-box-shadow: 0px 0px 15px #acacac69;
-          box-shadow: 0px 0px 15px #acacac69;
+  -webkit-box-shadow: 0 0 15px #acacac69;
+          box-shadow: 0 0 15px #acacac69;
 }
 
 #welcomePage .right-side .role-buttons .form-button .text-btn {
@@ -197,7 +197,6 @@ body {
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
-  position: absolute;
   bottom: 0;
   left: 0;
   text-align: center;

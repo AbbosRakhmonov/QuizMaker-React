@@ -59,10 +59,6 @@ body {
 }
 
 .modal .pop-modal .modal-content .modal-header .modal-title {
-  font-family: "Roboto", sans-serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 30px;
   line-height: normal;
   color: #5d80cb;
 }

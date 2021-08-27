@@ -20,6 +20,7 @@ import {
   Input,
 } from "reactstrap";
 import "./style.css";
+import { Link } from "react-router-dom";
 
 function Base() {
   const [questions, setQuestions] = useState([]);
@@ -395,26 +396,47 @@ function Base() {
           <div className="row p-0 m-0">
             <div className="col-md-12 p-0 m-0">
               <header className="header">
-                <h1 className="header-title">Questions</h1>
-                <form className="search-box focused">
-                  <label htmlFor="search-bar">
-                    <img src={SearchIcon} alt="lupa" />
-                  </label>
-                  <input
-                    type="search"
-                    placeholder="type something to search..."
-                    id="search-bar"
-                    className="search-bar"
-                    onChange={(e) => {
-                      setSearchQuestion(
-                        e.target.value.replace(/\s+/g, " ").trim().toLowerCase()
-                      );
-                    }}
-                  />
-                </form>
-                <button className="btn add-btn" onClick={clickAddBtn}>
-                  Add<i className="bi bi-plus-lg plus-icon"></i>
-                </button>
+                <div className="row m-0 p-0 w-100">
+                  <div
+                    className="col-3 p-0 m-0
+                  "
+                  >
+                    <h1 className="header-title">Questions</h1>
+                  </div>
+                  <div className="col-6 m-0 p-0">
+                    <form className="search-box focused w-100">
+                      <label htmlFor="search-bar">
+                        <img src={SearchIcon} alt="lupa" />
+                      </label>
+                      <input
+                        type="search"
+                        placeholder="type something to search..."
+                        id="search-bar"
+                        className="search-bar"
+                        onChange={(e) => {
+                          setSearchQuestion(
+                            e.target.value
+                              .replace(/\s+/g, " ")
+                              .trim()
+                              .toLowerCase()
+                          );
+                        }}
+                      />
+                    </form>
+                  </div>
+                  <div className="col-md-3 p-0 d-flex align-items-center justify-content-end">
+                    <button className="btn add-btn" onClick={clickAddBtn}>
+                      Add<i className="bi bi-plus-lg plus-icon"></i>
+                    </button>
+                    <Link
+                      to="/file"
+                      className="btn add-btn ms-2"
+                      onClick={clickAddBtn}
+                    >
+                      Add File<i className="bi bi-plus-lg plus-icon"></i>
+                    </Link>
+                  </div>
+                </div>
               </header>
             </div>
             {field !== null ? (

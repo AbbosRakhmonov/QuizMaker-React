@@ -1,0 +1,49 @@
+@import "../../components";
+
+#UploadFile {
+  width: 100vw;
+  height: 100vh;
+  background-color: $color-right-side;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .drop-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 100px 150px;
+    border: 2px solid #ffffff;
+    cursor: pointer;
+    transition: 0.3s ease;
+    .file-icon,
+    .file-progress-icon {
+      font-size: 50px;
+      color: #ffffff;
+      margin-bottom: 20px;
+    }
+    .file-progress-icon {
+      display: none;
+    }
+    .upload-title {
+      font-family: "Roboto", sans-serif;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 30px;
+      color: #ffffff;
+    }
+  }
+
+  .active {
+    border-style: dashed;
+    transition: 0.3s ease;
+    background-color: $color-blue;
+    .file-icon {
+      display: none;
+    }
+    .file-progress-icon {
+      display: block;
+    }
+  }
+}
