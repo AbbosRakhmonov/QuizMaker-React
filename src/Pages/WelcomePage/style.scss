@@ -128,7 +128,7 @@
     opacity: 0.5;
   }
 }
-@media (min-width: 0) and (orientation: portrait) and (max-width: 767px) {
+@media (min-width: 0) and (max-width: 767px) {
   #welcomePage {
     height: 100vh;
     background: linear-gradient(
@@ -137,7 +137,7 @@
       $color-right-side 25%
     );
     .left-side {
-      height: 25%;
+      height:25%;
       .logo {
         transform: scale(0.5);
       }
@@ -177,62 +177,7 @@
     }
   }
 }
-@media (min-width: 0) and (orientation: landscape) and (max-width: 767px) {
-  #welcomePage {
-    .col-sm-12 {
-      width: 50%;
-    }
-    .left-side {
-      justify-content: flex-start;
-      .logo {
-        img {
-          width: 75%;
-        }
-      }
-    }
-    .right-side {
-      .user-form {
-        margin-left: 10%;
-        img {
-          width: 60px;
-          height: 60px;
-        }
-        .input-group {
-          margin-bottom: 10px;
-          .input-label {
-            font-size: 12px;
-          }
-          .form-input {
-            width: 170px;
-            height: auto;
-            padding: 5px;
-            font-size: 10px;
-          }
-        }
-      }
-      .role-buttons {
-        .form-button {
-          border-width: 10px;
-          &:first-child {
-            width: 90px;
-            height: 90px;
-            img {
-              width: 70%;
-            }
-          }
-          &:last-child {
-            width: 70px;
-            height: 70px;
-            img {
-              width: 100%;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-@media (min-width: 768px) and (orientation: portrait) and (max-width: 991px) {
+@media (min-width: 768px) and (max-width: 991px) {
   #welcomePage {
     .left-side {
       justify-content: flex-end;
@@ -273,56 +218,6 @@
     }
     .bottom-text {
       display: none;
-    }
-  }
-}
-@media (min-width: 768px) and (orientation: landscape) and (max-width: 991px) {
-  #welcomePage {
-    background-color: red;
-    .col-sm-12 {
-      width: 50%;
-    }
-    .left-side {
-      justify-content: flex-start;
-      .logo {
-        img {
-          width: 80%;
-        }
-      }
-    }
-    .right-side {
-      .user-form {
-        .input-group {
-          .input-label {
-            font-size: 16px;
-          }
-          .form-input {
-            width: 200px;
-            height: auto;
-            padding: 10px;
-            font-size: 14px;
-          }
-        }
-      }
-      .role-buttons {
-        .form-button {
-          border-width: 15px;
-          &:first-child {
-            width: 100px;
-            height: 100px;
-            img {
-              width: 70%;
-            }
-          }
-          &:last-child {
-            width: 80px;
-            height: 80px;
-            img {
-              width: 100%;
-            }
-          }
-        }
-      }
     }
   }
 }
