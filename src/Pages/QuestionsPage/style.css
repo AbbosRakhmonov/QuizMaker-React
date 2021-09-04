@@ -1,23 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap");
-body {
-  padding: 0;
-  margin: 0;
-  overflow-x: hidden;
-}
-
 .question-page-modal {
   width: 800px !important;
 }
-
 .question-page-modal .modal-header {
   margin-bottom: 20px !important;
 }
-
 .question-page-modal .modal-header h5 {
   font-size: 36px !important;
 }
-
 .question-page-modal .modal-body .modal-body-text {
   font-family: "Roboto", sans-serif;
   font-style: normal;
@@ -26,7 +17,6 @@ body {
   margin-bottom: 0;
   color: #565656;
 }
-
 .question-page-modal .modal-body .true-answers-number {
   font-family: "Roboto", sans-serif;
   font-style: normal;
@@ -35,7 +25,6 @@ body {
   color: #fdba4d;
   margin: 15px 0;
 }
-
 .question-page-modal .modal-footer {
   margin-top: 20px;
 }
@@ -44,61 +33,33 @@ body {
   height: 100vh;
   overflow-x: hidden;
 }
-
-#TestsPage::-webkit-input-placeholder {
-  color: #737373;
-}
-
-#TestsPage:-ms-input-placeholder {
-  color: #737373;
-}
-
-#TestsPage::-ms-input-placeholder {
-  color: #737373;
-}
-
 #TestsPage::placeholder {
   color: #737373;
 }
-
 #TestsPage::-webkit-scrollbar {
   width: 2px;
   border-radius: 5px;
 }
-
 #TestsPage::-webkit-scrollbar-track {
   background-color: transparent;
   border-radius: 5px;
 }
-
 #TestsPage::-webkit-scrollbar-thumb {
   background-color: #757575;
   border-radius: 5px;
 }
-
 #TestsPage .main-row {
   height: 100%;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -ms-flex-wrap: nowrap;
-      flex-wrap: nowrap;
+  flex-direction: column;
+  flex-wrap: nowrap;
 }
-
 #TestsPage .main-row .question-content {
-  -webkit-box-flex: 1;
-      -ms-flex: auto;
-          flex: auto;
+  flex: auto;
 }
-
 #TestsPage .main-row .question-content .question-data {
-  -webkit-box-flex: 1;
-      -ms-flex: auto;
-          flex: auto;
+  flex: auto;
   padding: 0 150px;
 }
-
 #TestsPage .main-row .question-content .question-data .page-title {
   font-family: "Roboto", sans-serif;
   font-style: normal;
@@ -108,7 +69,6 @@ body {
   text-align: center;
   margin-bottom: 30px;
 }
-
 #TestsPage .main-row .question-content .question-data .question-number {
   font-family: "Roboto", sans-serif;
   font-style: normal;
@@ -118,7 +78,6 @@ body {
   color: #757575;
   margin: 30px 0;
 }
-
 #TestsPage .main-row .question-content .question-data .question-title {
   font-family: "Roboto", sans-serif;
   font-style: normal;
@@ -128,11 +87,9 @@ body {
   margin-bottom: 30px;
   text-align: center;
 }
-
 #TestsPage .main-row .question-content .question-data .questions-answers-box {
   padding: 0 40px;
 }
-
 #TestsPage .main-row .question-content .question-data .questions-answers-box .answer-btn {
   width: 100%;
   padding: 16px 20px;
@@ -145,11 +102,9 @@ body {
   font-size: 18px;
   color: #757575;
   border: 1px solid #f5f5f5;
-  -webkit-transition: 0.3s ease;
   transition: 0.3s ease;
   margin-bottom: 20px;
 }
-
 #TestsPage .main-row .question-content .question-data .questions-answers-box .answer-btn .answer-checked {
   -moz-appearance: none;
   -webkit-appearance: none;
@@ -164,7 +119,6 @@ body {
   margin-right: 20px;
   position: relative;
 }
-
 #TestsPage .main-row .question-content .question-data .questions-answers-box .answer-btn .answer-checked::after {
   content: "";
   width: 10px;
@@ -174,105 +128,73 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-  -webkit-transition: 0.2s ease;
+  transform: translate(-50%, -50%);
   transition: 0.2s ease;
   opacity: 0;
 }
-
 #TestsPage .main-row .question-content .question-data .questions-answers-box .answer-btn .answer-checked:checked::after {
   opacity: 1;
 }
-
 #TestsPage .main-row .question-content .question-data .questions-answers-box .active-btn {
   background-color: #a9bbe0;
   border-color: #5d80cb;
   color: #ffffff;
 }
-
 #TestsPage .main-row .question-content .question-data .questions-answers-box .active-btn .answer-checked {
   border-color: #5d80cb;
 }
-
 #TestsPage .main-row .question-content .question-data .questions-answers-box .slide-buttons {
   width: 100%;
   margin-top: 20px;
   margin-bottom: 40px;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
+  align-items: center;
+  justify-content: space-around;
 }
-
 #TestsPage .main-row .question-content .question-data .questions-answers-box .slide-buttons .btn {
   border-radius: 50px;
   padding: 10px 20px;
   color: #ffffff;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
   font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: bold;
   font-size: 14px;
-  -webkit-transition: 0.3s ease;
   transition: 0.3s ease;
-  -webkit-box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
-          box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
 }
-
 #TestsPage .main-row .question-content .question-data .questions-answers-box .slide-buttons .btn:hover {
   background-color: #6948a4;
 }
-
 #TestsPage .main-row .question-content .question-data .questions-answers-box .slide-buttons .btn:active {
-  -webkit-transform: scale(0.9);
-          transform: scale(0.9);
+  transform: scale(0.9);
 }
-
 #TestsPage .main-row .question-content .question-data .questions-answers-box .slide-buttons .prev-btn {
   background-color: #fdba4d;
   visibility: hidden;
 }
-
 #TestsPage .main-row .question-content .question-data .questions-answers-box .slide-buttons .prev-btn img {
-  -webkit-transform: scale(-1);
-          transform: scale(-1);
+  transform: scale(-1);
   margin-right: 5px;
 }
-
 #TestsPage .main-row .question-content .question-data .questions-answers-box .slide-buttons .show-prev-btn {
   visibility: visible;
-  -webkit-animation: showPrevBtn 0.3s linear forwards;
-          animation: showPrevBtn 0.3s linear forwards;
+  animation: showPrevBtn 0.3s linear forwards;
 }
-
 #TestsPage .main-row .question-content .question-data .questions-answers-box .slide-buttons .hide-prev-btn {
   visibility: hidden;
-  -webkit-animation: hidePrevBtn 0.3s linear forwards;
-          animation: hidePrevBtn 0.3s linear forwards;
+  animation: hidePrevBtn 0.3s linear forwards;
 }
-
 #TestsPage .main-row .question-content .question-data .questions-answers-box .slide-buttons .next-btn {
   background-color: #5d80cb;
 }
-
 #TestsPage .main-row .question-content .question-data .questions-answers-box .slide-buttons .next-btn img {
   margin-left: 5px;
 }
-
 #TestsPage .main-row .question-content .timer-data {
   text-align: center;
 }
-
 #TestsPage .main-row .question-content .timer-data .time {
   font-family: "Roboto", sans-serif;
   font-style: normal;
@@ -281,57 +203,26 @@ body {
   color: #fdba4d;
 }
 
-@-webkit-keyframes showPrevBtn {
-  0% {
-    opacity: 0;
-    -webkit-transform: translateX(-100%);
-            transform: translateX(-100%);
-  }
-  100% {
-    -webkit-transform: translateX(0);
-            transform: translateX(0);
-    opacity: 1;
-  }
-}
-
 @keyframes showPrevBtn {
   0% {
     opacity: 0;
-    -webkit-transform: translateX(-100%);
-            transform: translateX(-100%);
+    transform: translateX(-100%);
   }
   100% {
-    -webkit-transform: translateX(0);
-            transform: translateX(0);
+    transform: translateX(0);
     opacity: 1;
   }
 }
-
-@-webkit-keyframes hidePrevBtn {
-  0% {
-    visibility: visible;
-    opacity: 1;
-    -webkit-transform: translateX(0);
-            transform: translateX(0);
-  }
-  100% {
-    opacity: 0;
-    -webkit-transform: translateX(-100%);
-            transform: translateX(-100%);
-  }
-}
-
 @keyframes hidePrevBtn {
   0% {
     visibility: visible;
     opacity: 1;
-    -webkit-transform: translateX(0);
-            transform: translateX(0);
+    transform: translateX(0);
   }
   100% {
     opacity: 0;
-    -webkit-transform: translateX(-100%);
-            transform: translateX(-100%);
+    transform: translateX(-100%);
   }
 }
+
 /*# sourceMappingURL=style.css.map */

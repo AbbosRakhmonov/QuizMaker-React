@@ -1,20 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap");
 body {
-  padding: 0;
-  margin: 0;
-  overflow-x: hidden;
-}
-
-body {
-  padding: 0;
-  margin: 0;
-  overflow: hidden !important;
+  width: 100vw;
+  height: 100vh;
+  padding: 0 !important;
+  margin: 0 !important;
   background-color: #f5f5f5 !important;
+  overflow: hidden !important;
 }
-
 body .alert {
   display: none;
+  margin-bottom: 0;
   position: absolute;
   top: 0;
   width: 100%;
@@ -22,20 +18,16 @@ body .alert {
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
-  -webkit-transition: 0.2s ease-in-out;
   transition: 0.2s ease-in-out;
-  -webkit-transform: translateY(-100%);
-          transform: translateY(-100%);
+  transform: translateY(-100%);
   border: none;
   border-radius: 0;
 }
-
 body .alert .alert-icon {
   margin-right: 5px;
 }
-
 body .show-alert {
-  -webkit-transform: translateY(0) !important;
-          transform: translateY(0) !important;
+  transform: translateY(0) !important;
 }
+
 /*# sourceMappingURL=index.css.map */

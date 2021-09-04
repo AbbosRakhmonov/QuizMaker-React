@@ -1,11 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap");
-body {
-  padding: 0;
-  margin: 0;
-  overflow-x: hidden;
-}
-
 .answer-box {
   max-width: 100%;
   overflow: hidden !important;
@@ -17,30 +11,15 @@ body {
   font-style: normal !important;
   font-weight: normal !important;
   font-size: 16px !important;
-  -webkit-transition: 0.3s ease-in-out !important;
   transition: 0.3s ease-in-out !important;
   white-space: normal;
   border: 0 !important;
   cursor: pointer;
   line-height: normal !important;
 }
-
-.answer-box ::-webkit-input-placeholder {
-  color: #757575;
-}
-
-.answer-box :-ms-input-placeholder {
-  color: #757575;
-}
-
-.answer-box ::-ms-input-placeholder {
-  color: #757575;
-}
-
 .answer-box ::placeholder {
   color: #757575;
 }
-
 .answer-box:hover {
   background-color: #a9bbe0 !important;
   color: #ffffff !important;
@@ -49,4 +28,5 @@ body {
 .answer-label {
   margin-left: 20px;
 }
+
 /*# sourceMappingURL=style.css.map */
