@@ -29,4 +29,15 @@
   margin-left: 20px;
 }
 
+@media (min-width: 0) and (max-width: 767px) {
+  .answer-box {
+    padding: 15px !important;
+    font-size: 14px !important;
+  }
+
+  .answer-label {
+    margin-left: 15px;
+  }
+}
+
 /*# sourceMappingURL=style.css.map */

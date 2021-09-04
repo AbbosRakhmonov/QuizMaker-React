@@ -6,7 +6,7 @@
 }
 .modal .pop-modal {
   padding: 30px 45px 25px 45px !important;
-  box-shadow: 0px 0px 60px rgba(0, 0, 0, 0.5) !important;
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.5) !important;
   border-radius: 50px !important;
   background-color: #ffffff;
   width: 1000px;
@@ -49,7 +49,6 @@
 .modal .pop-modal .modal-content .modal-body .add-answer-btn {
   width: 100%;
   padding: 5px;
-  display: flex;
   align-items: center;
   justify-content: center;
   background-color: #fdba4d;
@@ -148,7 +147,6 @@
   color: #ffffff;
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
   transition: 0.3s ease;
-  display: flex;
   align-items: center;
   overflow: hidden;
   visibility: hidden;
@@ -183,7 +181,6 @@
   transition: 0.2s ease-in-out;
   -moz-appearance: none;
   -webkit-appearance: none;
-  -o-appearance: none;
   background-color: #ffffff;
   filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
   overflow: hidden;
@@ -232,7 +229,7 @@
   background: #ffffff;
   display: flex;
   align-items: center;
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.25);
   border-radius: 30px;
   padding: 7px 0 7px 20px;
   box-sizing: border-box;
@@ -424,6 +421,113 @@
     transform: translateX(200%) rotate(180deg) scale(0.5);
     opacity: 0;
     visibility: hidden;
+  }
+}
+/* Responsive */
+@media (min-width: 0) and (max-width: 767px) {
+  .modal {
+    padding: 25px 0;
+  }
+  .modal .pop-modal {
+    padding: 30px 15px 25px 15px !important;
+  }
+  .modal .pop-modal .modal-content .modal-close-btn img {
+    width: 22px;
+  }
+  .modal .pop-modal .modal-content .modal-header .modal-title {
+    margin-top: 25px;
+  }
+  .modal .pop-modal .modal-content .modal-body .add-answer-btn {
+    font-size: 12px !important;
+  }
+  .modal .pop-modal .modal-content .modal-body .answer .check-btn {
+    width: 22px !important;
+    height: 19px !important;
+  }
+  .modal .pop-modal .modal-content .modal-footer .btn-add,
+.modal .pop-modal .modal-content .modal-footer .btn-save {
+    padding: 8px 50px;
+    font-size: 12px;
+  }
+  .modal .pop-modal .modal-content .modal-footer .ignore-btn,
+.modal .pop-modal .modal-content .modal-footer .agree-btn {
+    padding: 8px 35px;
+    margin: 0 5px;
+    font-size: 12px;
+  }
+
+  #dataBasePage .all-delete-btn {
+    padding: 3px;
+    border-radius: 50px;
+    border: 0;
+    outline: 0;
+    font-size: 0;
+    margin-right: 5px;
+    overflow: hidden;
+    background-color: #fdba4d;
+  }
+  #dataBasePage .all-delete-btn img {
+    transform: scale(1.1);
+    margin-right: 0;
+  }
+  #dataBasePage .all-delete-btn:active {
+    transform: scale(0.8);
+  }
+  #dataBasePage .header {
+    padding: 20px 0 20px 0;
+  }
+  #dataBasePage .header .header-title {
+    font-size: 20px;
+    margin-right: 0;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  #dataBasePage .header .search-box {
+    padding: 7px 0 7px 15px;
+    margin-bottom: 10px;
+  }
+  #dataBasePage .header .search-box .search-bar {
+    padding: 0 8px;
+    font-size: 14px;
+  }
+  #dataBasePage .header .search-box label {
+    display: flex;
+    align-items: center;
+  }
+  #dataBasePage .header .search-box label img {
+    width: 20px;
+  }
+  #dataBasePage .header .header-buttons {
+    justify-content: center !important;
+  }
+  #dataBasePage .header .add-btn {
+    font-size: 12px;
+    padding: 5px 15px;
+    margin-left: 0;
+  }
+  #dataBasePage .header .add-btn .plus-icon {
+    font-size: 10px;
+  }
+  #dataBasePage .field-label {
+    font-size: 14px;
+  }
+  #dataBasePage .field-input {
+    font-size: 12px;
+  }
+  #dataBasePage .btn-save-field {
+    font-size: 12px;
+    margin-top: 10px;
+  }
+  #dataBasePage .columns .column-item .col-name {
+    font-size: 14px;
+  }
+  #dataBasePage .columns .column-item:nth-child(2) {
+    display: flex;
+    justify-content: center;
+  }
+  #dataBasePage .question-container .questions-list .question .column-item .question-number,
+#dataBasePage .question-container .questions-list .question .column-item .question-title {
+    font-size: 14px;
   }
 }
 

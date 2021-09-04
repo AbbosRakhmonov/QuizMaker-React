@@ -388,7 +388,7 @@ function Base() {
           }`}
           role="alert"
         >
-          <i className="alert-icon bi bi-check-circle-fill"></i>
+          <i className="alert-icon bi bi-check-circle-fill"/>
           <div>Congratulate Saved</div>
         </div>
         <Navbar Page="database" />
@@ -397,13 +397,10 @@ function Base() {
             <div className="col-md-12 p-0 m-0">
               <header className="header">
                 <div className="row m-0 p-0 w-100">
-                  <div
-                    className="col-3 p-0 m-0
-                  "
-                  >
+                  <div className="col-md-3 col-sm-12 p-0 m-0">
                     <h1 className="header-title">Questions</h1>
                   </div>
-                  <div className="col-6 m-0 p-0">
+                  <div className="col-md-6 col-sm-12 m-0 p-0">
                     <form className="search-box focused w-100">
                       <label htmlFor="search-bar">
                         <img src={SearchIcon} alt="lupa" />
@@ -424,26 +421,26 @@ function Base() {
                       />
                     </form>
                   </div>
-                  <div className="col-md-3 p-0 d-flex align-items-center justify-content-end">
+                  <div className="col-md-3 col-sm-12 p-0 d-flex align-items-center justify-content-end header-buttons">
                     <button className="btn add-btn" onClick={clickAddBtn}>
-                      Add<i className="bi bi-plus-lg plus-icon"></i>
+                      Add<i className="bi bi-plus-lg plus-icon"/>
                     </button>
                     <Link
                       to="/file"
                       className="btn add-btn ms-2"
                       onClick={clickAddBtn}
                     >
-                      Add File<i className="bi bi-plus-lg plus-icon"></i>
+                      Add File<i className="bi bi-plus-lg plus-icon"/>
                     </Link>
                   </div>
                 </div>
               </header>
             </div>
             {field !== null ? (
-              <div className="col-12 p-0 mb-4">
+              <div className="col-lg-12 p-0 mb-4">
                 <div className="row p-0 m-0">
-                  <div className="col-5 ps-0">
-                    <FormGroup>
+                  <div className="col-6 col-md-5 ps-0">
+                    <FormGroup className={"d-flex flex-column h-100 justify-content-between"}>
                       <Label className="field-label" for="attempts">
                         Number Of Attempts
                       </Label>
@@ -460,7 +457,7 @@ function Base() {
                       />
                     </FormGroup>
                   </div>
-                  <div className="col-5">
+                  <div className="col-6 col-md-5">
                     <FormGroup>
                       <Label for="timer" className="field-label">
                         Duration Of Test (minute)
@@ -478,7 +475,7 @@ function Base() {
                       />
                     </FormGroup>
                   </div>
-                  <div className="col-2 pe-0 d-flex align-items-end justify-content-end">
+                  <div className="col-md-2 col-12 pe-0 d-flex align-items-end justify-content-md-end justify-content-center">
                     <button
                       className="btn btn-save-field"
                       onClick={saveTimerAndAttemtps}
@@ -496,7 +493,7 @@ function Base() {
         <div className="col-md-12 columns m-0 p-0">
           <div className="container">
             <div className="row m-0 p-0">
-              <div className="col-sm-2 p-0 column-item">
+              <div className="col-2 p-0 column-item">
                 <h1
                   className={`col-name ${selectedMoreThanOne ? "d-none" : ""}`}
                 >
@@ -511,17 +508,13 @@ function Base() {
                   onChange={clickSelectAllBtn}
                 />
               </div>
-              <div className="col-sm-2 p-0 column-item">
+              <div className="col-2 p-0 column-item">
                 <h1 className="col-name">Nth</h1>
               </div>
-              <div className="col-sm-6 p-0 column-item">
-                <h1 className="col-name d-inline-block">Title</h1>
+              <div className="col-5 col-sm-6 p-0 column-item">
+                <h1 className="col-name">Title</h1>
               </div>
-              <div
-                className={`col-sm-2 p-0 column-item text-end ${
-                  selectedMoreThanOne ? "d-flex justify-content-end" : ""
-                }`}
-              >
+              <div className={`col-3 col-sm-2 p-0 column-item text-end ${selectedMoreThanOne ? "d-flex justify-content-end" : ""}`}>
                 <h1
                   className={`col-name ${selectedMoreThanOne ? "d-none" : ""}`}
                 >
@@ -559,20 +552,20 @@ function Base() {
                   key={index}
                 >
                   <div className="row m-0 p-0">
-                    <div className="col-sm-2 p-0 column-item">
+                    <div className="col-2 p-0 column-item">
                       <Checkbtn
                         id={item.id}
                         checked={item.checked}
                         onChange={onChangeChecked}
                       />
                     </div>
-                    <div className="col-sm-2 p-0 column-item">
+                    <div className="col-2 p-0 column-item d-flex justify-content-sm-start justify-content-center">
                       <h1 className="question-number">{index + 1}</h1>
                     </div>
-                    <div className="col-sm-6 p-0 column-item overflow-hidden">
+                    <div className="col-6 p-0 column-item overflow-hidden">
                       <h1 className="question-title">{item.title}</h1>
                     </div>
-                    <div className="col-sm-2 p-0 column-item text-end justify-content-end">
+                    <div className="col-2 p-0 column-item text-end justify-content-end">
                       <button
                         className={`btn edit-btn ${
                           selectedMoreThanOne ? "disabled" : ""

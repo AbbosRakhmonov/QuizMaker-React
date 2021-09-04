@@ -68,3 +68,22 @@
     }
   }
 }
+
+@media (min-width: 0) and (max-width: 767px){
+.navbar{
+  .logo {
+    img {
+      width: 70px;
+    }
+  }
+  .nav {
+    .nav-item {
+      font-size: 12px;
+      margin-right: 8px;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
+}
