@@ -24,8 +24,8 @@ function QuestionsPage({ history }) {
     toggleModal();
   }
   const shuffle = (array) => {
-    var currentIndex = array.length,
-      randomIndex;
+    let currentIndex = array.length,
+        randomIndex;
 
     while (currentIndex !== 0) {
       randomIndex = Math.floor(Math.random() * currentIndex);
@@ -87,8 +87,7 @@ function QuestionsPage({ history }) {
   const clickPlayAgainBtn = () => {
     reset();
     setCurrentQuestionIndex(0);
-    getData();
-    toggleModal();
+    getData().then(()=> toggleModal())
   };
   const changeAnswerChecked = (index) => {
     const prevAnswers = currentQuestion.answers;
@@ -168,7 +167,7 @@ function QuestionsPage({ history }) {
           <h1 className="true-answers-number">
             {trueAnswers} / {questions.length}
           </h1>
-          <p className="modal-body-text">quesions correct</p>
+          <p className="modal-body-text">questions correct</p>
         </ModalBody>
         <ModalFooter>
           <Button
@@ -197,9 +196,7 @@ function QuestionsPage({ history }) {
       >
         <div className="container h-100">
           <div className="row p-0 m-0 main-row">
-            <div className="col-12 m-0 p-0">
               <Navbar />
-            </div>
             <div className="col-12 p-0 m-0 question-content">
               <div className="row flex-column h-100 flex-nowrap">
                 <div className="col-md-12 question-data">

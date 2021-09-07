@@ -105,7 +105,6 @@
             .answer-checked {
               -moz-appearance: none;
               -webkit-appearance: none;
-              -o-appearance: none;
               min-width: 18px;
               max-width: 18px;
               min-height: 18px;
@@ -228,5 +227,99 @@
   100% {
     opacity: 0;
     transform: translateX(-100%);
+  }
+}
+
+@media (min-width: 0) and (max-width: 767px){
+  .question-page-modal {
+    .modal-header {
+      h5 {
+        font-size: 22px !important;
+        margin-top: 0 !important;
+      }
+    }
+    .modal-body {
+      .modal-body-text {
+        font-size: 18px;
+      }
+      .true-answers-number {
+        font-size: 25px;
+      }
+    }
+    .modal-footer {
+      margin-top: 15px;
+    }
+  }
+
+  #TestsPage {
+    .navbar{
+      .container{
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+    }
+    .main-row {
+      .question-content {
+        .question-data {
+          padding: 0 15px;
+          .page-title {
+            font-size: 20px;
+            margin-bottom: 15px;
+          }
+          .question-number {
+            font-size: 14px;
+            margin: 15px 0;
+          }
+          .question-title {
+            font-size: 16px;
+          }
+          .questions-answers-box {
+            padding: 0 15px;
+            .answer-btn {
+              padding: 12px;
+              font-size: 12px;
+              margin-bottom: 15px;
+              .answer-checked {
+                min-width: 15px;
+                max-width: 15px;
+                min-height: 15px;
+                max-height: 15px;
+                margin-right: 10px;
+                &::after {
+                  width: 10px;
+                  height: 10px;
+                  transform: translate(-53%, -48%);
+                }
+              }
+            }
+            .slide-buttons {
+              margin: 20px 0;
+              .btn {
+                padding: 10px;
+                font-size: 10px;
+              }
+              .prev-btn {
+                img {
+                  transform: scale(-1,0.8);
+                  margin-right: 4px;
+                }
+              }
+              .next-btn {
+                background-color: $color-blue;
+                img {
+                  transform: scale(0.8);
+                  margin-left: 4px;
+                }
+              }
+            }
+          }
+        }
+        .timer-data {
+          .time {
+            font-size: 20px;
+          }
+        }
+      }
+    }
   }
 }
