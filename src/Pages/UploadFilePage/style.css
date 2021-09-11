@@ -46,4 +46,13 @@
   display: block;
 }
 
+@media (min-width: 0) and (max-width: 767px) {
+  #UploadFile .drop-box {
+    padding: 50px;
+  }
+  #UploadFile .drop-box .upload-title {
+    font-size: 20px;
+  }
+}
+
 /*# sourceMappingURL=style.css.map */
