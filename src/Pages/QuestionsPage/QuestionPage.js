@@ -15,33 +15,24 @@ function QuestionsPage({history, setFinal, trueAnswers, setTrueAnswers, username
     const [modalVisible, setModalVisible] = useState(false);
     const [timer, setTimer] = useState(0);
     const [numberOfAttempts, setNumberOfAttempts] = useState(1);
-    const [number_of_questions, setNumberOfQuestions] = useState(5);
-    const {seconds, minutes, hours, pause, reset} = useTimer(
-        timer * 60,
-        handleTimerFinish
-    );
+    const [number_of_questions, setNumberOfQuestions] = useState(0);
+    const {seconds, minutes, hours, pause, reset} = useTimer(timer * 60, handleTimerFinish);
 
     function handleTimerFinish() {
         toggleModal();
     }
 
-    const shuffle = (array, number_of_questions) => {
-        let currentIndex = array.length,
-            randomIndex;
+    const shuffle = (array) => {
+        let currentIndex = array.length, randomIndex;
 
         while (currentIndex !== 0) {
             randomIndex = Math.floor(Math.random() * currentIndex);
             currentIndex--;
 
-            [array[currentIndex], array[randomIndex]] = [
-                array[randomIndex],
-                array[currentIndex],
-            ];
+            [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex],];
         }
 
-        return number_of_questions <= array.length
-            ? array.slice(0, number_of_questions)
-            : array;
+        return array;
     };
     const toggleModal = () => {
         setModalVisible((prev) => !prev);
@@ -53,16 +44,9 @@ function QuestionsPage({history, setFinal, trueAnswers, setTrueAnswers, username
         for (let i = 0; i < prevQuestions.length; i++) {
             for (let j = 0; j < questions.length; j++) {
                 if (prevQuestions[i].title === questions[j].title) {
-                    const prevAnswers = prevQuestions[i].answers.filter(
-                        (item) => item.checked === true
-                    );
-                    const newAnswers = questions[j].answers.filter(
-                        (item) => item.checked === true
-                    );
-                    if (
-                        newAnswers.length > 0 ||
-                        newAnswers.length === prevAnswers.length
-                    ) {
+                    const prevAnswers = prevQuestions[i].answers.filter((item) => item.checked === true);
+                    const newAnswers = questions[j].answers.filter((item) => item.checked === true);
+                    if (newAnswers.length > 0 || newAnswers.length === prevAnswers.length) {
                         let counter = 0;
                         for (let m = 0; m < newAnswers.length; m++) {
                             for (let n = 0; n < prevAnswers.length; n++) {
@@ -71,8 +55,7 @@ function QuestionsPage({history, setFinal, trueAnswers, setTrueAnswers, username
                                 }
                             }
                         }
-                        if (counter === prevAnswers.length)
-                            setTrueAnswers((prev) => prev + 1);
+                        if (counter === prevAnswers.length) setTrueAnswers((prev) => prev + 1);
                     }
                 }
             }
@@ -92,7 +75,7 @@ function QuestionsPage({history, setFinal, trueAnswers, setTrueAnswers, username
     const clickPlayAgainBtn = () => {
         reset();
         setCurrentQuestionIndex(0);
-        getData().then(() => toggleModal());
+        getTime().then(() => getQuestions().then(() => toggleModal()));
     };
     const changeAnswerChecked = (index) => {
         const prevAnswers = currentQuestion.answers;
@@ -103,55 +86,47 @@ function QuestionsPage({history, setFinal, trueAnswers, setTrueAnswers, username
             return item;
         });
         setCurrentQuestion({
-            ...currentQuestion,
-            answers: prevAnswers,
+            ...currentQuestion, answers: prevAnswers,
         });
     };
-    const getData = async () => {
-        await Api("/time", "get")
-            .then((res) => {
-                const fetchedResult = [];
-                for (let key in res.data) {
-                    fetchedResult.push({
-                        ...res.data[key],
-                        id: key,
-                    });
-                }
-                setTimer(fetchedResult[0].durations);
-                setNumberOfQuestions(fetchedResult[0].number_of_questions);
-            })
-            .catch((err) => console.error(err));
-
-        await Api("/questions", "get").then((res) => {
-            let fetchedResult = [];
-            for (let key in res.data) {
-                fetchedResult.push({
-                    ...res.data[key],
-                });
-            }
-            fetchedResult = shuffle(fetchedResult);
-            for (let item of fetchedResult) {
-                item.answers = shuffle(item.answers, number_of_questions);
-            }
-            const data = fetchedResult.map((item) => ({
-                title: item.title,
-                answers: item.answers.map((item) => ({
-                    title: item.title,
-                    checked: false,
-                })),
-            }));
-            setQuestions(data);
-            setPrevQuestions(fetchedResult);
-        }).catch((err) => console.error(err));
-    };
+    const getTime = () => Api("/time", "get").then(time => {
+        const timeData = [];
+        for (let key in time.data) {
+            timeData.push({
+                ...time.data[key], id: key,
+            });
+        }
+        setTimer(timeData[0].durations);
+        setNumberOfQuestions(timeData[0].number_of_questions);
+    }).catch((err) => console.error(err));
+    const getQuestions = () => Api("/questions", "get").then(questions => {
+        let fetchedResult = [];
+        for (let key in questions.data) {
+            fetchedResult.push({
+                ...questions.data[key],
+            });
+        }
+        fetchedResult = shuffle(fetchedResult);
+        for (let item of fetchedResult) {
+            item.answers = shuffle(item.answers);
+        }
+        const data = fetchedResult.slice(0, number_of_questions).map((item) => ({
+            title: item.title, answers: item.answers.map((item) => ({
+                title: item.title, checked: false,
+            })),
+        }));
+        setQuestions(data);
+        setPrevQuestions(fetchedResult);
+    }).catch(err => console.error(err));
     useEffect(() => {
-        (username !== "" && surname !== "") ? getData() : history.push("/");
-    }, [history]);
+        if (username !== "" && surname !== "") {
+            getTime()
+            getQuestions()
+        } else history.push("/");
+    }, [history, number_of_questions]);
     useEffect(() => {
         if (questions.length > 0) {
-            const prevQuestion = questions.find(
-                (item, index) => index === currentQuestionIndex
-            );
+            const prevQuestion = questions.find((item, index) => index === currentQuestionIndex);
             setCurrentQuestion(prevQuestion);
         }
     }, [currentQuestionIndex, questions]);
@@ -159,149 +134,125 @@ function QuestionsPage({history, setFinal, trueAnswers, setTrueAnswers, username
         reset();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [timer]);
-    return (
-        <>
-            <Loader opacity={questions.length > 0 && timer > 0 ? 0 : 1}/>
-            <Modal
-                isOpen={modalVisible}
-                className={"pop-modal question-page-modal"}
-                centered={true}
-            >
-                <ModalHeader className="text-center text-uppercase">
-                    CONGRATULATION
-                </ModalHeader>
-                <ModalBody className="text-center">
-                    <p className="modal-body-text">You Answered</p>
-                    <h1 className="true-answers-number">
-                        {trueAnswers} / {questions.length}
-                    </h1>
-                    <p className="modal-body-text">questions correct</p>
-                    <Button
-                        className="btn btn-primary my-3"
-                        onClick={() => {
-                            history.push("/document");
-                        }}
-                    >
-                        Show Result
-                    </Button>
-                </ModalBody>
-                <ModalFooter>
-                    <Button
-                        className="btn ignore-btn back-btn"
-                        onClick={() => {
-                            history.push("/");
-                        }}
-                    >
-                        Back to home
-                    </Button>
-                    <Button
-                        className={`btn agree-btn play-again-btn ${
-                            numberOfAttempts > 0 ? "d-flex" : "d-none"
-                        }`}
-                        onClick={clickPlayAgainBtn}
-                    >
-                        Play again
-                    </Button>
-                </ModalFooter>
-            </Modal>
-            <section
-                id="TestsPage"
-                className={`${
-                    questions.length > 0 && timer > 0 ? "d-block" : "d-none"
-                }`}
-            >
-                <div className="container h-100">
-                    <div className="row p-0 m-0 main-row">
-                        <Navbar/>
-                        <div className="col-12 p-0 m-0 question-content">
-                            <div className="row flex-column h-100 flex-nowrap">
-                                <div className="col-md-12 question-data">
-                                    <h1 className="page-title text-uppercase">Questions</h1>
-                                    <p className="question-number">
-                                        {currentQuestionIndex + 1} / {number_of_questions}
-                                    </p>
-                                    <h3 className="question-title">
-                                        {currentQuestion ? currentQuestion.title : ""}
-                                    </h3>
-                                    <div className="questions-answers-box">
-                                        {currentQuestion
-                                            ? currentQuestion.answers.map((item, index) => (
-                                                <label
-                                                    key={index}
-                                                    htmlFor={index}
-                                                    className={`btn answer-btn d-flex align-items-center ${
-                                                        item.checked ? "active-btn" : ""
-                                                    }`}
-                                                >
-                                                    <input
-                                                        type="checkbox"
-                                                        className="answer-checked"
-                                                        id={index}
-                                                        checked={item.checked}
-                                                        onChange={() => {
-                                                            changeAnswerChecked(index);
-                                                        }}
-                                                    />
-                                                    <span className="answer-title">{item.title}</span>
-                                                </label>
-                                            ))
-                                            : ""}
-                                        <div className="slide-buttons">
-                                            <button
-                                                className={`btn prev-btn ${
-                                                    currentQuestionIndex > 0
-                                                        ? "show-prev-btn"
-                                                        : "hide-prev-btn"
-                                                }`}
-                                                onClick={clickPrevBtn}
-                                            >
-                                                <img
-                                                    src={Chevron}
-                                                    className="chevron-left"
-                                                    alt="chevron right"
-                                                />
-                                                Prev Question
-                                            </button>
-                                            <button
-                                                className={`btn next-btn ${
-                                                    currentQuestionIndex === number_of_questions - 1
-                                                        ? "d-none"
-                                                        : ""
-                                                }`}
-                                                onClick={clickNextBtn}
-                                            >
-                                                Next Question
-                                                <img
-                                                    src={Chevron}
-                                                    alt="chevron right"
-                                                    className="chevron-right"
-                                                />
-                                            </button>
-                                            <button
-                                                className={`btn next-btn ${
-                                                    currentQuestionIndex === number_of_questions - 1
-                                                        ? "d-flex"
-                                                        : "d-none"
-                                                }`}
-                                                onClick={clickFinishBtn}
-                                            >
-                                                Finish
-                                            </button>
-                                        </div>
+    return (<>
+        <Loader opacity={questions.length > 0 && timer > 0 ? 0 : 1}/>
+        <Modal
+            isOpen={modalVisible}
+            className={"pop-modal question-page-modal"}
+            centered={true}
+        >
+            <ModalHeader className="text-center text-uppercase">
+                CONGRATULATION
+            </ModalHeader>
+            <ModalBody className="text-center">
+                <p className="modal-body-text">You Answered</p>
+                <h1 className="true-answers-number">
+                    {trueAnswers} / {questions.length}
+                </h1>
+                <p className="modal-body-text">questions correct</p>
+                <Button
+                    className="btn btn-primary my-3"
+                    onClick={() => {
+                        history.push("/document");
+                    }}
+                >
+                    Show Result
+                </Button>
+            </ModalBody>
+            <ModalFooter>
+                <Button
+                    className="btn ignore-btn back-btn"
+                    onClick={() => {
+                        history.push("/");
+                    }}
+                >
+                    Back to home
+                </Button>
+                <Button
+                    className={`btn agree-btn play-again-btn ${numberOfAttempts > 0 ? "d-flex" : "d-none"}`}
+                    onClick={clickPlayAgainBtn}
+                >
+                    Play again
+                </Button>
+            </ModalFooter>
+        </Modal>
+        <section
+            id="TestsPage"
+            className={`${questions.length > 0 && timer > 0 ? "d-block" : "d-none"}`}
+        >
+            <div className="container h-100">
+                <div className="row p-0 m-0 main-row">
+                    <Navbar/>
+                    <div className="col-12 p-0 m-0 question-content">
+                        <div className="row flex-column h-100 flex-nowrap">
+                            <div className="col-md-12 question-data">
+                                <h1 className="page-title text-uppercase">Questions</h1>
+                                <p className="question-number">
+                                    {currentQuestionIndex + 1} / {number_of_questions}
+                                </p>
+                                <h3 className="question-title">
+                                    {currentQuestion ? currentQuestion.title : ""}
+                                </h3>
+                                <div className="questions-answers-box">
+                                    {currentQuestion ? currentQuestion.answers.map((item, index) => (<label
+                                        key={index}
+                                        htmlFor={index}
+                                        className={`btn answer-btn d-flex align-items-center ${item.checked ? "active-btn" : ""}`}
+                                    >
+                                        <input
+                                            type="checkbox"
+                                            className="answer-checked"
+                                            id={index}
+                                            checked={item.checked}
+                                            onChange={() => {
+                                                changeAnswerChecked(index);
+                                            }}
+                                        />
+                                        <span className="answer-title">{item.title}</span>
+                                    </label>)) : ""}
+                                    <div className="slide-buttons">
+                                        <button
+                                            className={`btn prev-btn ${currentQuestionIndex > 0 ? "show-prev-btn" : "hide-prev-btn"}`}
+                                            onClick={clickPrevBtn}
+                                        >
+                                            <img
+                                                src={Chevron}
+                                                className="chevron-left"
+                                                alt="chevron right"
+                                            />
+                                            Prev Question
+                                        </button>
+                                        <button
+                                            className={`btn next-btn ${currentQuestionIndex === number_of_questions - 1 ? "d-none" : ""}`}
+                                            onClick={clickNextBtn}
+                                        >
+                                            Next Question
+                                            <img
+                                                src={Chevron}
+                                                alt="chevron right"
+                                                className="chevron-right"
+                                            />
+                                        </button>
+                                        <button
+                                            className={`btn next-btn ${currentQuestionIndex === number_of_questions - 1 ? "d-flex" : "d-none"}`}
+                                            onClick={clickFinishBtn}
+                                        >
+                                            Finish
+                                        </button>
                                     </div>
                                 </div>
-                                <div className="col-md-12 p-0 m-0 timer-data">
-                                    <p className="time">
-                                        {hours} : {minutes} : {seconds}
-                                    </p>
-                                </div>
+                            </div>
+                            <div className="col-md-12 p-0 m-0 timer-data">
+                                <p className="time">
+                                    {hours} : {minutes} : {seconds}
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
-        </>
-    );
+            </div>
+        </section>
+    </>);
 }
 
 export default QuestionsPage;
