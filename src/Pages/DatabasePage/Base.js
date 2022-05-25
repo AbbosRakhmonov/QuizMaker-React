@@ -22,7 +22,7 @@ import {
 import "./style.css";
 import { Link } from "react-router-dom";
 
-function Base() {
+function Base({ history }) {
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
@@ -240,12 +240,14 @@ function Base() {
     const id = field.id;
     const durations = field.durations;
     const attempts = field.attempts;
+    const number_of_questions = field.number_of_questions;
     const data = {
       id,
       durations,
       attempts,
+      number_of_questions,
     };
-    if (durations >= 5 && attempts >= 1) {
+    if (durations >= 5 && attempts >= 1 && number_of_questions >= 5) {
       Api(`/time/${id}`, "put", data).then((res) => {
         if (res.status === 200) {
           setIsSavedField(true);
@@ -287,9 +289,10 @@ function Base() {
       setField(fetchedResult[0]);
     });
   };
-  useEffect(() => {
-    getData();
-  }, []);
+  useEffect(()=> {
+    if (localStorage.getItem("admin")) getData();
+    else history.push("/login");
+  }, [history]);
   useEffect(() => {
     if (selectedQuestions.length >= 1) {
       setSelectedMoreThanOne((prev) => true);
@@ -388,7 +391,7 @@ function Base() {
           }`}
           role="alert"
         >
-          <i className="alert-icon bi bi-check-circle-fill"/>
+          <i className="alert-icon bi bi-check-circle-fill" />
           <div>Congratulate Saved</div>
         </div>
         <Navbar Page="database" />
@@ -423,14 +426,16 @@ function Base() {
                   </div>
                   <div className="col-md-3 col-sm-12 p-0 d-flex align-items-center justify-content-end header-buttons">
                     <button className="btn add-btn" onClick={clickAddBtn}>
-                      Add<i className="bi bi-plus-lg plus-icon"/>
+                      Add
+                      <i className="bi bi-plus-lg plus-icon" />
                     </button>
                     <Link
                       to="/file"
                       className="btn add-btn ms-2"
                       onClick={clickAddBtn}
                     >
-                      Add File<i className="bi bi-plus-lg plus-icon"/>
+                      Add File
+                      <i className="bi bi-plus-lg plus-icon" />
                     </Link>
                   </div>
                 </div>
@@ -439,8 +444,12 @@ function Base() {
             {field !== null ? (
               <div className="col-lg-12 p-0 mb-4">
                 <div className="row p-0 m-0">
-                  <div className="col-6 col-md-5 ps-0">
-                    <FormGroup className={"d-flex flex-column h-100 justify-content-between"}>
+                  <div className="col-6 col-md-3 ps-0">
+                    <FormGroup
+                      className={
+                        "d-flex flex-column h-100 justify-content-between"
+                      }
+                    >
                       <Label className="field-label" for="attempts">
                         Number Of Attempts
                       </Label>
@@ -457,7 +466,7 @@ function Base() {
                       />
                     </FormGroup>
                   </div>
-                  <div className="col-6 col-md-5">
+                  <div className="col-6 col-md-3">
                     <FormGroup>
                       <Label for="timer" className="field-label">
                         Duration Of Test (minute)
@@ -475,7 +484,30 @@ function Base() {
                       />
                     </FormGroup>
                   </div>
-                  <div className="col-md-2 col-12 pe-0 d-flex align-items-end justify-content-md-end justify-content-center">
+                  <div className="col-12 col-md-3">
+                    <FormGroup>
+                      <Label for="timer" className="field-label">
+                        Number of questions (min:5)
+                      </Label>
+                      <Input
+                        type="number"
+                        name="number"
+                        id="timer"
+                        placeholder="minute"
+                        className="field-input"
+                        value={field.number_of_questions}
+                        onChange={(e) => {
+                          let val = e.target.value;
+                          Number(val) >= 5 &&
+                            setField({
+                              ...field,
+                              number_of_questions: e.target.value,
+                            });
+                        }}
+                      />
+                    </FormGroup>
+                  </div>
+                  <div className="col-md-3 col-12 pe-0 d-flex align-items-end justify-content-md-end justify-content-center">
                     <button
                       className="btn btn-save-field"
                       onClick={saveTimerAndAttemtps}
@@ -514,7 +546,11 @@ function Base() {
               <div className="col-5 col-sm-6 p-0 column-item">
                 <h1 className="col-name">Title</h1>
               </div>
-              <div className={`col-3 col-sm-2 p-0 column-item text-end ${selectedMoreThanOne ? "d-flex justify-content-end" : ""}`}>
+              <div
+                className={`col-3 col-sm-2 p-0 column-item text-end ${
+                  selectedMoreThanOne ? "d-flex justify-content-end" : ""
+                }`}
+              >
                 <h1
                   className={`col-name ${selectedMoreThanOne ? "d-none" : ""}`}
                 >

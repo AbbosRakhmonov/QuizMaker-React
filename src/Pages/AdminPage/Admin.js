@@ -7,37 +7,44 @@ import Api from "../../Services/Api";
 import Loader from "../../Components/Loader/Loader";
 import "./style.css";
 
-function Admin({ history }) {
+function Admin({ history, isPasswordWrong, setIsPasswordWrong, setIsAdmin }) {
   const [opacitLoader, setOpacityLoader] = useState(1);
   const [isPasswordEmpty, setIsPasswordEmpty] = useState(false);
-  const [isPasswordWrong, setIsPasswordWrong] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const password = useRef("");
   const email = useRef("");
-
   const clickSignBtn = (e) => {
     e.preventDefault();
     if (
       password.current.value !== "" &&
       password.current.value.indexOf(" ") < 0
     ) {
-      Api("/admin", "get").then((res) => {
-        const fetchedResult = res.data;
-        if (password.current.value === fetchedResult[0].password) {
-          history.push("/database");
-          setIsPasswordEmpty((prev) => false);
-          setIsPasswordWrong((prev) => false);
-        } else {
-          setIsPasswordEmpty((prev) => false);
-          setIsPasswordWrong((prev) => true);
-        }
-      });
+      Api("/admin", "get")
+        .then((res) => {
+          const fetchedResult = res.data;
+          if (password.current.value === fetchedResult[0].password) {
+            setIsAdmin((prev) => true);
+            history.push("/database");
+            setIsPasswordEmpty((prev) => false);
+            setIsPasswordWrong((prev) => false);
+          } else {
+            setIsPasswordEmpty((prev) => false);
+            setIsPasswordWrong((prev) => true);
+            setTimeout(() => {
+              setIsPasswordWrong((prev) => false);
+            }, 2000);
+          }
+        })
+        .catch((err) => console.error(err));
     } else if (
       password.current.value === "" ||
       password.current.value.indexOf(" ") >= 0
     ) {
       setIsPasswordEmpty((prev) => true);
       setIsPasswordWrong((prev) => false);
+      setTimeout(() => {
+        setIsPasswordEmpty((prev) => false);
+      }, 2000);
     }
   };
 
@@ -53,10 +60,14 @@ function Admin({ history }) {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      setOpacityLoader(0);
-    }, 500);
-  }, []);
+    if (localStorage.getItem("admin")) {
+      history.push("/database");
+    } else {
+      setTimeout(() => {
+        setOpacityLoader(0);
+      }, 500);
+    }
+  }, [history]);
 
   return (
     <>

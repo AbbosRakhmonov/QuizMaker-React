@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "./style.css";
 import Logo from "./logo.svg";
 import UserImage from "./user-image.svg";
@@ -6,18 +6,16 @@ import Plus from "./plus-button.svg";
 import Play from "./play-button.svg";
 import Loader from "../../Components/Loader/Loader";
 
-function WelcomePage({ history }) {
-  const username = useRef();
-  const surname = useRef();
+function WelcomePage({ history,setSurname,setUsername,username,surname }) {
   const [opacityLoader, setOpacityLoader] = useState(1);
   const [isFill, setIsFill] = useState(false);
   const clickPlayBtn = (e) => {
     e.preventDefault();
     if (
-      username.current.value !== "" &&
-      username.current.value.indexOf(" ") < 0 &&
-      surname.current.value !== "" &&
-      surname.current.value.indexOf(" ") < 0
+      username !== "" &&
+      username.indexOf(" ") < 0 &&
+      surname !== "" &&
+      surname.indexOf(" ") < 0
     ) {
       history.push("/quiz");
       setIsFill((prev) => false);
@@ -65,7 +63,8 @@ function WelcomePage({ history }) {
                     id="username"
                     placeholder="Your name"
                     className="form-input"
-                    ref={username}
+                    value={username}
+                    onChange={(e)=>setUsername(e.target.value)}
                   />
                 </div>
                 <div className="input-group">
@@ -77,7 +76,8 @@ function WelcomePage({ history }) {
                     id="password"
                     placeholder="Your surname"
                     className="form-input"
-                    ref={surname}
+                    value={surname}
+                    onChange={(e)=>setSurname(e.target.value)}
                     autoComplete="false"
                   />
                 </div>
@@ -97,7 +97,7 @@ function WelcomePage({ history }) {
                 </button>
               </div>
             </div>
-            <span className="bottom-text">Press play for running test</span>
+            {/*<span className="bottom-text">Press play for running test</span>*/}
           </div>
         </div>
       </section>
