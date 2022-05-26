@@ -75,7 +75,7 @@ function QuestionsPage({history, setFinal, trueAnswers, setTrueAnswers, username
     const clickPlayAgainBtn = () => {
         reset();
         setCurrentQuestionIndex(0);
-        getTime().then(() => getQuestions().then(() => toggleModal()));
+        getData().then(() => toggleModal());
     };
     const changeAnswerChecked = (index) => {
         const prevAnswers = currentQuestion.answers;
@@ -89,39 +89,41 @@ function QuestionsPage({history, setFinal, trueAnswers, setTrueAnswers, username
             ...currentQuestion, answers: prevAnswers,
         });
     };
-    const getTime = () => Api("/time", "get").then(time => {
-        const timeData = [];
-        for (let key in time.data) {
-            timeData.push({
-                ...time.data[key], id: key,
-            });
-        }
-        setTimer(timeData[0].durations);
-        setNumberOfQuestions(timeData[0].number_of_questions);
-    }).catch((err) => console.error(err));
-    const getQuestions = () => Api("/questions", "get").then(questions => {
-        let fetchedResult = [];
-        for (let key in questions.data) {
-            fetchedResult.push({
-                ...questions.data[key],
-            });
-        }
-        fetchedResult = shuffle(fetchedResult);
-        for (let item of fetchedResult) {
-            item.answers = shuffle(item.answers);
-        }
-        const data = fetchedResult.slice(0, number_of_questions).map((item) => ({
-            title: item.title, answers: item.answers.map((item) => ({
-                title: item.title, checked: false,
-            })),
-        }));
-        setQuestions(data);
-        setPrevQuestions(fetchedResult);
-    }).catch(err => console.error(err));
+    const getData = async () => {
+        await Api("/time", "get").then(time => {
+            const timeData = [];
+            for (let key in time.data) {
+                timeData.push({
+                    ...time.data[key], id: key,
+                });
+            }
+            setTimer(timeData[0].durations);
+            setNumberOfQuestions(timeData[0].number_of_questions);
+        }).catch((err) => console.error(err));
+        await Api("/questions", "get").then(questions => {
+            let fetchedResult = [];
+            for (let key in questions.data) {
+                fetchedResult.push({
+                    ...questions.data[key],
+                });
+            }
+            fetchedResult = shuffle(fetchedResult);
+            for (let item of fetchedResult) {
+                item.answers = shuffle(item.answers);
+            }
+            const data = fetchedResult.slice(0, number_of_questions).map((item) => ({
+                title: item.title, answers: item.answers.map((item) => ({
+                    title: item.title, checked: false,
+                })),
+            }));
+            setQuestions(data);
+            setPrevQuestions(fetchedResult);
+        }).catch(err => console.error(err));
+    }
+
     useEffect(() => {
         if (username !== "" && surname !== "") {
-            getTime()
-            getQuestions()
+            getData();
         } else history.push("/");
     }, [history, number_of_questions]);
     useEffect(() => {
